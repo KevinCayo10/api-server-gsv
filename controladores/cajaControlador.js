@@ -20,3 +20,17 @@ exports.obtenerCajas = async (req, res) => {
     res.status(500).send("Hubo problemas al cargar los cajas");
   }
 };
+
+exports.eliminarCaja = async (req, res) => {
+  try {
+    let caja = await Caja.findById(req.params.id);
+    if (!caja) {
+      res.status(404).json({ msg: "No existe el caja" });
+    }
+    await Caja.findOneAndRemove({ _id: req.params.id });
+    res.json({ msg: "Caja Eliminado" });
+  } catch (e) {
+    console.log(error);
+    res.status(500).send("Hubo problemas al eliminar el Caja");
+  }
+};
